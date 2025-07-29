@@ -11,8 +11,8 @@ public class LinkedListDeque<T>{
         }
     }
 
-    public int size;
-    public Node sentinal;
+    private int size;
+    private Node sentinal;
 
     public LinkedListDeque() {
         this.size = 0;
@@ -72,7 +72,9 @@ public class LinkedListDeque<T>{
             return null;
         }
         this.sentinal.next = first.next;
-        this.size--;
+        if (this.size != 0) {
+            this.size--;
+        }
         return first.item;
     }
 
@@ -82,7 +84,9 @@ public class LinkedListDeque<T>{
             return null;
         }
         this.sentinal.prev = last.prev;
-        this.size--;
+        if (this.size != 0) {
+            this.size--;
+        }
         return last.item;
     }
 

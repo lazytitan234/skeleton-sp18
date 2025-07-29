@@ -1,5 +1,5 @@
-public class ArrayDeque<Item> {
-    private Item[] items;
+public class ArrayDeque<T> {
+    private T[] items;
     private int size;
     private int nextFirst;
     private int nextLast;
@@ -7,13 +7,13 @@ public class ArrayDeque<Item> {
     //first item goes to index 1 of items. addFirst adds to index 0.
 
     public ArrayDeque() {
-        this.items = (Item[]) new Object[8];
+        this.items = (T[]) new Object[8];
         this.size = 0;
         this.nextFirst = 0;
         this.nextLast = 1;
     }
 
-    public void addFirst(Item item) {
+    public void addFirst(T item) {
         if (this.size == this.items.length) {
             this.resize(this.items.length * 2);
             this.items[nextFirst] = item;
@@ -30,7 +30,7 @@ public class ArrayDeque<Item> {
         }
     }
 
-    public void addLast(Item item) {
+    public void addLast(T item) {
         if (this.size == this.items.length) {
             this.resize(items.length * 2);
             this.items[this.nextLast] = item;
@@ -68,19 +68,21 @@ public class ArrayDeque<Item> {
     }
 
 
-    public Item removeFirst() {
-        Item removed = this.items[(nextFirst + 1) % this.items.length];
+    public T removeFirst() {
+        T removed = this.items[(nextFirst + 1) % this.items.length];
         this.items[(this.nextFirst + 1) % this.items.length] = null;
         this.nextFirst = (this.nextFirst + 1) % this.items.length;
-        this.size--;
+        if (this.size != 0) {
+            this.size--;
+        }
         if (this.items.length >= 16 && (double) (this.size / this.items.length) < 0.25) {
             this.resize((int) 0.5 * this.size);
         }
         return removed;
     }
 
-    public Item removeLast() {
-        Item removed;
+    public T removeLast() {
+        T removed;
         if (this.nextLast == 0) {
             removed = this.items[this.items.length - 1];
             this.nextLast = this.items.length - 1;
@@ -88,14 +90,16 @@ public class ArrayDeque<Item> {
             removed = this.items[this.nextLast - 1];
             this.nextLast--;
         }
-        this.size--;
+        if (this.size != 0) {
+            this.size--;
+        }
         if (this.items.length >= 16 && (double) (this.size / this.items.length) < 0.25) {
             this.resize((int) 0.5 * this.size);
         }
         return removed;
     }
 
-    public Item get(int index) {
+    public T get(int index) {
         if (index >= this.size) {
             return null;
         }
@@ -104,7 +108,7 @@ public class ArrayDeque<Item> {
     }
 
     private void resize(int capacity) {
-        Item[] newArray = (Item[]) new Object[capacity];
+        T[] newArray = (T[]) new Object[capacity];
         for (int i = 0; i < this.size; i++) {
             newArray[i] = this.items[(this.nextFirst + 1 + i) % this.items.length];
         }
