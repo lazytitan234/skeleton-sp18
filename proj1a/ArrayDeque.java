@@ -79,7 +79,7 @@ public class ArrayDeque<T> {
             this.size--;
         }
         if (this.items.length >= 16 && (this.size * 1.0 / this.items.length) < 0.25) {
-            this.resize((int) 0.5 * this.items.length);
+            this.resize((int) (0.5 * this.items.length));
         }
         return removed;
     }
@@ -102,7 +102,7 @@ public class ArrayDeque<T> {
             this.size--;
         }
         if (this.items.length >= 16 && (this.size * 1.0 / this.items.length) < 0.25) {
-            this.resize((int) 0.5 * this.items.length);
+            this.resize((int) (0.5 * this.items.length));
         }
         return removed;
     }
