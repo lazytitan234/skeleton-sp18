@@ -103,7 +103,7 @@ public class ArrayDeque<T> {
         if (index >= this.size) {
             return null;
         }
-        int trueIndex = (this.nextFirst + 1) % this.items.length + index;
+        int trueIndex = ((this.nextFirst + 1) % this.items.length + index) % this.items.length;
         return this.items[trueIndex];
     }
 

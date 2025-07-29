@@ -71,7 +71,13 @@ public class LinkedListDeque<T>{
         if (first == this.sentinal) {
             return null;
         }
-        this.sentinal.next = first.next;
+        if (this.size == 1) {
+            this.sentinal.next = this.sentinal;
+            this.sentinal.prev = this.sentinal;
+        } else {
+            this.sentinal.next.next.prev = this.sentinal;
+            this.sentinal.next = first.next;
+        }
         if (this.size != 0) {
             this.size--;
         }
@@ -83,7 +89,14 @@ public class LinkedListDeque<T>{
         if (last == this.sentinal) {
             return null;
         }
-        this.sentinal.prev = last.prev;
+        if (this.size == 1) {
+            this.sentinal.next = this.sentinal;
+            this.sentinal.prev = this.sentinal;
+        } else {
+
+            this.sentinal.prev.prev.next = this.sentinal;
+            this.sentinal.prev = this.sentinal.prev.prev;
+        }
         if (this.size != 0) {
             this.size--;
         }
