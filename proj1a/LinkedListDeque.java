@@ -1,13 +1,13 @@
-public class LinkedListDeque<T>{
+public class LinkedListDeque<T> {
 
     private class Node {
         public T item;
         public Node prev;
         public Node next;
         public Node(T item, Node prev, Node next) {
-            this.item = item;
-            this.prev = prev;
-            this.next = next;
+            public item = item;
+            public prev = prev;
+            public next = next;
         }
     }
 

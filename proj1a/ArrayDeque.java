@@ -69,32 +69,40 @@ public class ArrayDeque<T> {
 
 
     public T removeFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
         T removed = this.items[(nextFirst + 1) % this.items.length];
         this.items[(this.nextFirst + 1) % this.items.length] = null;
         this.nextFirst = (this.nextFirst + 1) % this.items.length;
         if (this.size != 0) {
             this.size--;
         }
-        if (this.items.length >= 16 && (double) (this.size / this.items.length) < 0.25) {
-            this.resize((int) 0.5 * this.size);
+        if (this.items.length >= 16 && (this.size * 1.0 / this.items.length) < 0.25) {
+            this.resize((int) 0.5 * this.items.length);
         }
         return removed;
     }
 
     public T removeLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
         T removed;
         if (this.nextLast == 0) {
             removed = this.items[this.items.length - 1];
+            this.items[this.items.length - 1] = null;
             this.nextLast = this.items.length - 1;
         } else {
             removed = this.items[this.nextLast - 1];
+            this.items[this.nextLast - 1] = null;
             this.nextLast--;
         }
         if (this.size != 0) {
             this.size--;
         }
-        if (this.items.length >= 16 && (double) (this.size / this.items.length) < 0.25) {
-            this.resize((int) 0.5 * this.size);
+        if (this.items.length >= 16 && (this.size * 1.0 / this.items.length) < 0.25) {
+            this.resize((int) 0.5 * this.items.length);
         }
         return removed;
     }
