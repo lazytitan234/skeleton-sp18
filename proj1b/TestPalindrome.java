@@ -32,5 +32,7 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindrome("racecar", cc));
         assertFalse(palindrome.isPalindrome("Flake", cc));
         assertTrue(palindrome.isPalindrome("", cc));
+        assertTrue(palindrome.isPalindrome("&%", cc));
+        assertFalse(palindrome.isPalindrome("^&", cc));
     }
 }
