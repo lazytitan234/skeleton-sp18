@@ -34,5 +34,6 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("", cc));
         assertTrue(palindrome.isPalindrome("&%", cc));
         assertFalse(palindrome.isPalindrome("^&", cc));
+        assertTrue(palindrome.isPalindrome("@A", cc));
     }
 }
