@@ -477,12 +477,14 @@ public class Game implements Serializable {
     }
 
     public void displayBlockHelper(double x, double y) {
-        String description = finalWorldFrame[(int) x][(int) y].description();
-        Font font = new Font("Monaco", Font.BOLD, 20);
-        StdDraw.setFont(font);
-        StdDraw.setPenColor(StdDraw.WHITE);
-        StdDraw.text(WIDTH / 20, 9 * HEIGHT / 10, description);
-        StdDraw.show();
+        if (x >= 0 && x < WIDTH && y >= 0 && y < WIDTH) {
+            String description = finalWorldFrame[(int) x][(int) y].description();
+            Font font = new Font("Monaco", Font.BOLD, 20);
+            StdDraw.setFont(font);
+            StdDraw.setPenColor(StdDraw.WHITE);
+            StdDraw.text(WIDTH / 20, 9 * HEIGHT / 10, description);
+            StdDraw.show();
+        }
     }
 
     public void displayBlock() {
