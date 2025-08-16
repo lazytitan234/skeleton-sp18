@@ -11,6 +11,9 @@ public class PercolationStats {
     private double[] fractions;
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
+        if (N <= 0 || T <= 0) {
+            throw new java.lang.IllegalArgumentException("N and T must be greater than 0");
+        }
         size = N;
         numExp = T;
         creator = pf;
