@@ -51,10 +51,10 @@ public class Percolation {
                     percolationSet.union(xyToInt(row, col), xyToInt(row - 1, col));
                     fullnessSet.union(xyToInt(row, col), xyToInt(row - 1, col));
                 }
-                if (col != size - 1) {
+                if (col != size - 1 && isOpen(row, col + 1)) {
                     fullnessSet.union(xyToInt(row, col), xyToInt(row, col + 1));
                 }
-                if (col != 0) {
+                if (col != 0 && isOpen(row, col - 1)) {
                     fullnessSet.union(xyToInt(row, col), xyToInt(row, col - 1));
                 }
             } else {
