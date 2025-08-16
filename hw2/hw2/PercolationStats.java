@@ -11,6 +11,9 @@ public class PercolationStats {
     private double[] fractions;
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
+        size = N;
+        numExp = T;
+        creator = pf;
         fractions = new double[numExp];
         for (int i = 0; i < numExp; i++) {
             Percolation exp = creator.make(size);
