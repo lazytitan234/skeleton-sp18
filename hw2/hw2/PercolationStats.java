@@ -8,45 +8,26 @@ public class PercolationStats {
     private int size; //size refers to N
     private int numExp; //value of T
     private PercolationFactory creator;
+    private double[] fractions;
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
-        if (N <= 0 || T <= 0) {
-            throw new java.lang.IllegalArgumentException("N and T must be greater than 0");
+        fractions = new double[numExp];
+        for (int i = 0; i < numExp; i++) {
+            Percolation exp = creator.make(size);
+            while (!exp.percolates()) {
+                int siteNum = StdRandom.uniform(size * size);
+                Converter result = intToXY(siteNum);
+                exp.open(result.row, result.col);
+            }
+            fractions[i] = (double) exp.numberOfOpenSites() / (size * size);
         }
-        size = N;
-        numExp = T;
-        creator = pf;
     }
 
     public double mean() {
-        double[] totalMean = new double[numExp];
-        for (int i = 0; i < numExp; i++) {
-            Percolation exp = creator.make(size);
-            while (!exp.percolates()) {
-                int siteNum = StdRandom.uniform(size * size);
-                Converter result = intToXY(siteNum);
-                exp.open(result.row, result.col);
-            }
-            int numOpenSites = exp.numberOfOpenSites();
-            double fraction = numOpenSites / (size * size);
-            totalMean[i] = fraction;
-        }
-        return StdStats.mean(totalMean);
+        return StdStats.mean(fractions);
     }
 
     public double stddev() {
-        double[] fractions = new double[numExp];
-        for (int i = 0; i < numExp; i++) {
-            Percolation exp = creator.make(size);
-            while (!exp.percolates()) {
-                int siteNum = StdRandom.uniform(size * size);
-                Converter result = intToXY(siteNum);
-                exp.open(result.row, result.col);
-            }
-            int numOpenSites = exp.numberOfOpenSites();
-            double fraction = numOpenSites / (size * size);
-            fractions[i] = fraction;
-        }
         return StdStats.stddev(fractions);
     }
 
