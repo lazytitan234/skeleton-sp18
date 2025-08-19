@@ -1,6 +1,7 @@
 package lab9;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -23,6 +24,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     public MyHashMap() {
         buckets = new ArrayMap[DEFAULT_SIZE];
+        this.clear();
+    }
+
+    public MyHashMap(int initialSize) {
+        buckets = new ArrayMap[initialSize];
         this.clear();
     }
 
@@ -53,19 +59,38 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int hash = hash(key);
+        return buckets[hash].get(key);
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        int hash = hash(key);
+        if (buckets[hash].containsKey(key)) {
+            buckets[hash].put(key, value);
+            return;
+        } else {
+            buckets[hash].put(key, value);
+            if (loadFactor() > MAX_LF) {
+                MyHashMap newMap = new MyHashMap(size * 2);
+                for (int i = 0; i <buckets.length; i++) {
+                    for (K randomKey : buckets[i].keySet()) {
+                        int newHash = Math.floorMod(randomKey.hashCode(), buckets.length * 2);
+                        V randomValue = buckets[i].remove(randomKey);
+                        newMap.buckets[newHash].put(randomKey, randomValue);
+                    }
+                }
+                this.buckets = newMap.buckets;
+            }
+            size++;
+        }
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
