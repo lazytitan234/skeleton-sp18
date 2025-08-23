@@ -71,16 +71,13 @@ public class MergeSort {
             Queue<Item> items) {
         Queue<Queue<Item>> queueOfQueues = makeSingleItemQueues(items);
         //have to dequeue from queueOfQueues n times and merge n - 1 times in total
-        int numObjects = queueOfQueues.size();
-        if (numObjects == 0) {
-            return items;
+        while (queueOfQueues.size() > 1) {
+            Queue<Item> q1 = queueOfQueues.dequeue();
+            Queue<Item> q2 = queueOfQueues.dequeue();
+            Queue<Item> merged = mergeSortedQueues(q1, q2);
+            queueOfQueues.enqueue(merged);
         }
-        Queue<Item> randomQueue = queueOfQueues.dequeue();
-        for (int i = 0; i < numObjects - 1; i ++) {
-            Queue<Item> anotherRandomQueue = queueOfQueues.dequeue();
-            randomQueue = mergeSortedQueues(randomQueue, anotherRandomQueue);
-        }
-        return randomQueue;
+        return queueOfQueues.dequeue();
     }
 
     public static void main(String[] args) {
