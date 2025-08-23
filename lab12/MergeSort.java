@@ -72,6 +72,9 @@ public class MergeSort {
         Queue<Queue<Item>> queueOfQueues = makeSingleItemQueues(items);
         //have to dequeue from queueOfQueues n times and merge n - 1 times in total
         int numObjects = queueOfQueues.size();
+        if (numObjects == 0) {
+            return items;
+        }
         Queue<Item> randomQueue = queueOfQueues.dequeue();
         for (int i = 0; i < numObjects - 1; i ++) {
             Queue<Item> anotherRandomQueue = queueOfQueues.dequeue();
