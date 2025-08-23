@@ -47,13 +47,58 @@ public class QuickSort {
     private static <Item extends Comparable> void partition(
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
-        // Your code here!
+        int unsortedSize = unsorted.size();
+        for (int i = 0; i < unsortedSize; i++) {
+            Item item = unsorted.dequeue();
+            if (pivot.compareTo(item) < 0) {
+                greater.enqueue(item);
+            } else if (pivot.compareTo(item) > 0) {
+                less.enqueue(item);
+            } else {
+                equal.enqueue(item);
+            }
+        }
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        if (items.isEmpty() || items.size() == 1) {
+            return items;
+        }
+        Item pivot = getRandomItem(items);
+        Queue<Item> less = new Queue<Item>();
+        Queue<Item> equal = new Queue<Item>();
+        Queue<Item> greater = new Queue<Item>();
+        Queue<Item> copyOfUnsortedQueue = new Queue<Item>();
+        for (Item item : items) {
+            copyOfUnsortedQueue.enqueue(item);
+        }
+        partition(copyOfUnsortedQueue, pivot, less, equal, greater);
+        return catenate(catenate(quickSort(less), equal), quickSort(greater));
+    }
+
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<String>();
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ethan");
+        System.out.println("The following is the queue created:");
+        for (String student : students) {
+            System.out.print(student + " ");
+        }
+        System.out.print("\n");
+        System.out.print("\n");
+        Queue<String> sortedQueue = QuickSort.quickSort(students);
+        System.out.println("The unsorted queue is:");
+        for (String student : students) {
+            System.out.print(student + " ");
+        }
+        System.out.print("\n");
+        System.out.print("\n");
+        System.out.println("The sorted queue is:");
+        for (String student : sortedQueue) {
+            System.out.print(student + " ");
+        }
     }
 }

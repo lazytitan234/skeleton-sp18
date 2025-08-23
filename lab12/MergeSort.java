@@ -34,8 +34,13 @@ public class MergeSort {
     /** Returns a queue of queues that each contain one item from items. */
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
-        // Your code here!
-        return null;
+        Queue<Queue<Item>> result = new Queue<Queue<Item>>();
+        for (Item item : items) {
+            Queue<Item> randomQueue = new Queue<Item>();
+            randomQueue.enqueue(item);
+            result.enqueue(randomQueue);
+        }
+        return result;
     }
 
     /**
@@ -53,14 +58,49 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+       Queue<Item> result = new Queue<Item>();
+       int totalSize = q1.size() + q2.size();
+       for (int i = 0; i < totalSize; i++) {
+           result.enqueue(getMin(q1, q2));
+       }
+       return result;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        Queue<Queue<Item>> queueOfQueues = makeSingleItemQueues(items);
+        //have to dequeue from queueOfQueues n times and merge n - 1 times in total
+        int numObjects = queueOfQueues.size();
+        Queue<Item> randomQueue = queueOfQueues.dequeue();
+        for (int i = 0; i < numObjects - 1; i ++) {
+            Queue<Item> anotherRandomQueue = queueOfQueues.dequeue();
+            randomQueue = mergeSortedQueues(randomQueue, anotherRandomQueue);
+        }
+        return randomQueue;
+    }
+
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<String>();
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ethan");
+        System.out.println("The following is the queue created:");
+        for (String student : students) {
+            System.out.print(student + " ");
+        }
+        System.out.print("\n");
+        System.out.print("\n");
+        Queue<String> sortedQueue = MergeSort.mergeSort(students);
+        System.out.println("The unsorted queue is:");
+        for (String student : students) {
+            System.out.print(student + " ");
+        }
+        System.out.print("\n");
+        System.out.print("\n");
+        System.out.println("The sorted queue is:");
+        for (String student : sortedQueue) {
+            System.out.print(student + " ");
+        }
     }
 }
